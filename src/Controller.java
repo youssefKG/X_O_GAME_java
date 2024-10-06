@@ -1,29 +1,26 @@
-package controller;
-
-enum Player { x, o }
-
+package src;
 public class Controller {
 
-  public Player[] board = {null, null, null, null, null, null, null, null};
+  public char[] board = {'_', '_', '_', '_', '_', '_', '_', '_', '_'};
   private int winningCases[][] = {
       {0, 1, 2}, {0, 3, 6}, {0, 4, 8}, {2, 3, 6}, {2, 5, 8}};
-  Player currentPlayer = Player.x;
-  Player winner = null;
+  char currentPlayer = 'X';
+
+  char winner = '_';
 
   public void play(int posistionIndex) {
-    if (board[posistionIndex] != null) {
+    if (board[posistionIndex] != '_') {
       System.out.println("this case is not empty");
+      return;
+    }
+    if (this.winner != '_') {
+      System.out.println("the game is end and the winner is " + this.winner);
       return;
     }
 
     this.switchPlayer();
     this.board[posistionIndex] = this.currentPlayer;
     this.checkTheWinner();
-
-    if (this.winner != null) {
-      System.out.println("the winner is " + this.currentPlayer);
-      return;
-    }
 
     if (checkIfGameIsOver()) {
       System.out.println("the game is over");
@@ -46,16 +43,16 @@ public class Controller {
 
   private boolean checkIfGameIsOver() {
     for (int i = 0; i < 9; i++) {
-      if (board[i] == null)
+      if (board[i] == '_')
         return false;
     }
     return true;
   }
 
   private void switchPlayer() {
-    if (this.currentPlayer == Player.x)
-      this.currentPlayer = Player.o;
+    if (this.currentPlayer == 'X')
+      this.currentPlayer = 'O';
     else
-      this.currentPlayer = Player.x;
+      this.currentPlayer = 'X';
   }
 }
